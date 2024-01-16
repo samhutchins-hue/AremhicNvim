@@ -5,7 +5,7 @@
 | Windows (cmd)| `%userprofile%\AppData\Local\nvim\` |
 | Windows (powershell)| `$env:USERPROFILE\AppData\Local\nvim\` |
 
-Clone kickstart.nvim:
+Clone AremihcNvim:
 
 - on Linux and Mac
 ```sh

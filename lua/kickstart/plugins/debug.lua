@@ -39,6 +39,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'gdb'
       },
     }
 
@@ -83,5 +84,37 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
+
+    -- Install cpp specific config
+    dap.adapters.cppdbg = {
+      id = 'cppdbg',
+      type = 'executable',
+      command = '/home/samh/Downloads/ms-vscode.cpptools-1.18.5-linux-x64/debugAdapters/bin/OpenDebugAD7',
+    }
+
+    dap.configurations.cpp = {
+      {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtEntry = true,
+      },
+      {
+        name = 'Attach to gdbserver :1234',
+        type = 'cppdbg',
+        request = 'launch',
+        MIMode = 'gdb',
+        miDebuggerServerAddress = 'localhost:1234',
+        miDebuggerPath = '/usr/bin/gdb',
+        cwd = '${workspaceFolder}',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+      },
+    }
   end,
 }
